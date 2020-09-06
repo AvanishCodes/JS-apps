@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use API and implement</title>
+</head>
+<body>
+    <h1>Currency Exchange</h1>
+    
+    <form>
+
+        <p>
+            Convert from : 
+        </p>
+        <!-- Input field of number which is to be converted to other currency -->
+        <input type="number" id="numf">
+
+        <!-- Currency which has to be converted -->
+        <select id="basecurrency">
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+            <option value="NZD">NZD</option>
+            <option value="GBP">GBP</option>
+        </select>
+
+        <p>
+            Convert to : 
+        </p>
+
+        <!-- The  currency which has to be obtained -->
+        <select id="securrency">
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+            <option value="NZD">NZD</option>
+            <option value="GBP">GBP</option>
+        </select>
+
+    </form>
+
+    
+    <p id="result"></p>
+
+    <!-- Invoke the function when the button is clicked -->
+    <button onclick="getOption()">  Convert</button>
+    
+    <script>
+        // Select the number field and set the default value as 1
+        var numField = document.querySelector("#numf");
+            console.log(numField.value);
+            numField.value = 1;
+
+        // Action to be performed after user request
+        function getOption() { 
+            
+            // Get the currency which has to be converted
+            var selectElement =  document.querySelector('#basecurrency'); 
+            var output = selectElement.value; 
+            // Just to be on the safe side and debugging later on if any error arises
+            console.log(output);
+
+            // Set the url using the base currency
+            var url = 'https://api.exchangeratesapi.io/latest?base=' + output;
+            // Just to be on the safe side and debugging later on if any error arises
+            console.log(url);
+            // Get the url using the base currency
+            fetch(url)
+            // Convert the response into JSON data
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Get the form in which the currency has to be converted
+                var tocurrency = document.querySelector('#securrency');
+                var resin = tocurrency.value;
+                console.log(resin);
+                var resultsection = document.querySelector('#result');
+                // Print the result manipulaing HTML 
+                resultsection.innerHTML = numField.value+output+" = "+data.rates[resin]*numField.value+resin;
+            });
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+	<title>Task App using JavaSriptc</title>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+
+			// Disable teh submit button
+			document.querySelector('#submit').disabled = true;
+
+			document.querySelector('#task').onkeyup = () => {
+				if(document.querySelector('#task').value.length > 0) {
+					document.querySelector('#submit').disabled = false;
+				}
+				else{
+					document.querySelector('#submit').disabled = true;
+				}
+			}
+
+			document.querySelector('form').onsubmit = () => {
+			// 	// Get the text from task box and assign it to the task variable
+				const task = document.querySelector('#task').value;
+
+				const li = document.createElement('li');
+				li.innerHTML = task;
+				document.querySelector('#tasks').append(li);
+
+				document.querySelector('#task').value = '';
+
+				return false;
+				
+			}
+		})
+	</script>
+	
+	
+  </head>
+  <body>
+    <h1>Tasks</h1>
+    <ul id="tasks">
+
+    </ul>
+    <form>
+		<input type="text" name="new_task" id="task" placeholder="New task">
+		<input type="submit" value="AddTask" id="submit">
+    </form>
+  </body>
+</html>
